@@ -8,18 +8,17 @@ Projekt jest skonfigurowany do automatycznego deploy na GitHub Pages przy każdy
 
 1. **Włącz GitHub Pages w repozytorium:**
    - Idź do Settings → Pages
-   - W sekcji "Source" wybierz "GitHub Actions"
+   - W sekcji "Source" wybierz "Deploy from a branch"
+   - Branch: `gh-pages` (zostanie utworzony automatycznie)
 
 2. **Sprawdź uprawnienia workflow:**
    - Idź do Settings → Actions → General
    - W sekcji "Workflow permissions" wybierz "Read and write permissions"
    - Zaznacz "Allow GitHub Actions to create and approve pull requests"
 
-3. **Utwórz environment (jeśli nie istnieje):**
-   - Idź do Settings → Environments
-   - Kliknij "New environment"
-   - Nazwa: `github-pages`
-   - Kliknij "Configure environment"
+3. **Sprawdź uprawnienia do brancha:**
+   - Idź do Settings → Branches
+   - Upewnij się, że branch `main` ma uprawnienia do push
 
 4. **Push kodu do repozytorium:**
    ```bash
@@ -68,3 +67,11 @@ Jeśli obrazy/zasoby nie ładują się poprawnie, sprawdź czy:
 - Sprawdź czy masz włączone GitHub Pages w Settings
 - Upewnij się że workflow ma uprawnienia do zapisu
 - Sprawdź logi w zakładce Actions
+
+### Problem z uprawnieniami (403 error)
+Jeśli widzisz błąd "Permission denied to github-actions[bot]":
+1. Idź do Settings → Actions → General
+2. "Workflow permissions" → "Read and write permissions"
+3. Zaznacz "Allow GitHub Actions to create and approve pull requests"
+4. Zapisz zmiany
+5. Uruchom ponownie workflow (Re-run all jobs)
