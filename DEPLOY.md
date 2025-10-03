@@ -1,4 +1,5 @@
 # Deploy na GitHub Pages
+
 ## Automatyczny deploy z GitHub Actions
 
 Projekt jest skonfigurowany do automatycznego deploy na GitHub Pages przy każdym push do brancha `main`.
