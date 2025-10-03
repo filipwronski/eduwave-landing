@@ -15,18 +15,24 @@ Projekt jest skonfigurowany do automatycznego deploy na GitHub Pages przy każdy
    - W sekcji "Workflow permissions" wybierz "Read and write permissions"
    - Zaznacz "Allow GitHub Actions to create and approve pull requests"
 
-3. **Push kodu do repozytorium:**
+3. **Utwórz environment (jeśli nie istnieje):**
+   - Idź do Settings → Environments
+   - Kliknij "New environment"
+   - Nazwa: `github-pages`
+   - Kliknij "Configure environment"
+
+4. **Push kodu do repozytorium:**
    ```bash
    git add .
    git commit -m "USR-XXX - feat: setup GitHub Pages deployment"
    git push origin main
    ```
 
-4. **Sprawdź status deploy:**
+5. **Sprawdź status deploy:**
    - Idź do zakładki "Actions" w repozytorium
    - Sprawdź czy workflow "Deploy to GitHub Pages" się wykonał pomyślnie
 
-5. **Dostęp do strony:**
+6. **Dostęp do strony:**
    - Strona będzie dostępna pod adresem: `https://[username].github.io/landing/`
 
 ## Manualny deploy
