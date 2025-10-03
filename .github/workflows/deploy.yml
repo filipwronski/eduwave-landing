@@ -4,6 +4,17 @@ on:
   push:
     branches: [ main ]
 
+# Set permissions for GitHub token
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
