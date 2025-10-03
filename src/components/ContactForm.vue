@@ -1,5 +1,5 @@
 <template>
-  <div id="contact-form" class="bg-[#aac738] w-full rounded-2xl p-8 lg:p-6 shadow-lg">
+  <div id="contact-form" class="bg-[#aac738] w-full rounded-2xl p-6 lg:p-6 shadow-lg">
     <h3 class="text-2xl lg:text-2xl font-bold text-black mb-8">
       Umów się na konsultację
     </h3>

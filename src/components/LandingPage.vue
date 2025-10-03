@@ -2,12 +2,12 @@
   <div class="min-h-screen bg-white">
     <!-- Hero Section -->
     <section class="relative overflow-hidden">
-      <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex flex-col lg:flex-row gap-[20px] lg:gap-5">
+      <div class="max-w-[1280px] mt-4 sm:mt-12 md:mt-16 lg:mt-24 mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row gap-[20px] lg:gap-5">
           <!-- Left Content -->
           <div class="flex w-full flex-col fade-in lg:pr-[120px]">
             <!-- Logo -->
-            <div class="mb-8 mt-12 lg:mt-16">
+            <div class="mb-8 mt-8 lg:mt-16">
               <img 
                 src="/logo.svg" 
                 alt="Eduwave Logo" 
@@ -29,7 +29,7 @@
             <!-- CTA Button -->
             <button 
               @click="scrollToForm"
-              class="btn-primary text-base lg:text-lg px-6 py-3 mb-12 block w-full lg:hidden"
+              class="btn-primary text-base lg:text-lg px-6 py-3 mb-12 block w-full sm:hidden"
             >
               Umów się na bezpłatną konsultację
             </button>
@@ -61,7 +61,7 @@
           </div>
           
           <!-- Right Content - Contact Form (Desktop) -->
-          <div class="flex w-full mt-8 mb-8 lg:max-w-[400px] lg:mt-16">
+          <div class="flex w-full mt-8 mb-8 md:max-w-[360px] lg:max-w-[400px] lg:mt-16">
             <ContactForm />
           </div>
         </div>
