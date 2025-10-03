@@ -33,7 +33,7 @@ Projekt jest skonfigurowany do automatycznego deploy na GitHub Pages przy każdy
    - Sprawdź czy workflow "Deploy to GitHub Pages" się wykonał pomyślnie
 
 6. **Dostęp do strony:**
-   - Strona będzie dostępna pod adresem: `https://[username].github.io/landing/`
+   - Strona będzie dostępna pod adresem: `https://[username].github.io/eduwave-landing/`
 
 ## Manualny deploy
 
@@ -52,7 +52,7 @@ npm run deploy
 
 ## Konfiguracja
 
-- **Base path:** `/landing/` (dla GitHub Pages)
+- **Base path:** `/eduwave-landing/` (dla GitHub Pages)
 - **Build folder:** `dist/`
 - **Node version:** 18
 - **Framework:** Vue 3 + Vite + Tailwind CSS
@@ -61,7 +61,7 @@ npm run deploy
 
 ### Problem z ścieżkami
 Jeśli obrazy/zasoby nie ładują się poprawnie, sprawdź czy:
-- Base path w `vite.config.js` jest ustawiony na `/landing/`
+- Base path w `vite.config.js` jest ustawiony na `/eduwave-landing/`
 - Wszystkie ścieżki w kodzie używają względnych ścieżek
 
 ### Problem z GitHub Actions
