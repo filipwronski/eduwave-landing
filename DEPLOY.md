@@ -30,13 +30,13 @@ Jeśli chcesz zrobić manualny deploy:
 
 ```bash
 # Zainstaluj zależności
-npm install
+pnpm install
 
 # Zbuduj projekt
-npm run build
+pnpm run build
 
 # Deploy na GitHub Pages
-npm run deploy
+pnpm run deploy
 ```
 
 ## Konfiguracja
