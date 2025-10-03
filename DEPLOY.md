@@ -8,17 +8,18 @@ Projekt jest skonfigurowany do automatycznego deploy na GitHub Pages przy każdy
 
 1. **Włącz GitHub Pages w repozytorium:**
    - Idź do Settings → Pages
-   - W sekcji "Source" wybierz "Deploy from a branch"
-   - Branch: `gh-pages` (zostanie utworzony automatycznie)
+   - W sekcji "Source" wybierz "GitHub Actions"
 
 2. **Sprawdź uprawnienia workflow:**
    - Idź do Settings → Actions → General
    - W sekcji "Workflow permissions" wybierz "Read and write permissions"
    - Zaznacz "Allow GitHub Actions to create and approve pull requests"
 
-3. **Sprawdź uprawnienia do brancha:**
-   - Idź do Settings → Branches
-   - Upewnij się, że branch `main` ma uprawnienia do push
+3. **Utwórz environment (jeśli nie istnieje):**
+   - Idź do Settings → Environments
+   - Kliknij "New environment"
+   - Nazwa: `github-pages`
+   - Kliknij "Configure environment"
 
 4. **Push kodu do repozytorium:**
    ```bash
