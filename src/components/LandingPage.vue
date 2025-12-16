@@ -16,8 +16,8 @@
             </div>
             
             <!-- Main Headline -->
-            <h1 class="heading mt-20">
-              Korepetycje,&nbsp;które&nbsp;otwierają drzwi do Twoich celów
+            <h1 class="heading mt-20 mb-8 md:mb-0">
+              Korepetycje, które otwierają drzwi <span class="heading-line">do&nbsp;Twoich&nbsp;celów</span>
             </h1>
             
             <!-- Subtitle -->
@@ -94,29 +94,15 @@ const scrollToForm = () => {
 </script>
 
 <style lang="scss">
-  .bg-image {
-    background-image: url('/background.svg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-  }
+.heading-line {
+  position: relative;
 
-  .heading {
-    color: #240A29;
-    font-size: 60px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 120%; /* 72px */
-    letter-spacing: -0.6px;
-    position: relative;
-    z-index: 1;
-
-    &::after {
+  &::after {
       content: '';
       position: absolute;
-      bottom: 0;
-      right: 150px;
-      width: 465px;
+      bottom: 2px;
+      left: 2px;
+      width: 447.5px;
       height: 20px;
       background-image: url('/line.svg');
       background-size: cover;
@@ -124,34 +110,13 @@ const scrollToForm = () => {
       background-repeat: no-repeat;
       z-index: -1;
     }
-  }
 
-  .subheading {
-    color: #240A29;
-    font-size: 24px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 140%; /* 33.6px */
-    letter-spacing: -0.72px;
-  }
-
-  .text {
-    color: #240A29; 
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 140%;
-    letter-spacing: -0.2px;
-    opacity: 0.8;
-  }
-
-  .text-small {
-    color: #240A29;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 140%; /* 22.4px */
-    letter-spacing: -0.16px;
-    opacity: 0.8;
-  }
+    @media (max-width: 1024px) {
+      &::after {
+        width: 295px;
+        bottom: 0px;
+        height: 15px;
+      }
+    }
+}
 </style>
