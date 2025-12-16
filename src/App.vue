@@ -1,9 +1,9 @@
 <template>
   <div id="app" class="min-h-screen bg-white">
-    <LandingPage />
+    <router-view />
   </div>
 </template>
 
 <script setup>
-import LandingPage from './components/LandingPage.vue'
+// Router is configured in main.js
 </script>

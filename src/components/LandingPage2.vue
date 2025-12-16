@@ -7,17 +7,17 @@
           <!-- Left Content -->
           <div class="flex w-full flex-col fade-in lg:pr-[60px]">
             <!-- Logo -->
-            <img 
-                src="/logo.svg" 
-                alt="Eduwave Logo" 
+            <img
+                src="/logo.svg"
+                alt="Eduwave Logo"
                 class="max-w-[175px] md:max-w-[219px] h-auto"
               />
-            
+
             <!-- Main Headline -->
             <h1 class="heading mt-20 mb-8 md:mb-4">
               Korepetycje, które otwierają drzwi <span class="heading-line">do&nbsp;Twoich&nbsp;celów</span>
             </h1>
-            
+
             <!-- Subtitle -->
             <p class="text mb-4">
               Od 11 lat wspieramy uczniów i&nbsp;studentów w&nbsp;osiąganiu ambitnych celów.<br>
@@ -25,9 +25,9 @@
             <p class="text mb-12 max-w-[650px]">
               Z Eduwave skutecznie przygotujesz się do egzaminów, poprawisz oceny i&nbsp;odkryjesz swój potencjał.
             </p>
-            
+
             <!-- CTA Button -->
-            <button 
+            <button
               @click="scrollToForm"
               class="btn-primary text-base lg:text-lg px-6 py-3 mb-12 block w-full sm:hidden"
             >
@@ -38,17 +38,17 @@
             <h2 class="subheading">
               Dlaczego Eduwave?
             </h2>
-            
+
             <div class="space-y-4">
-              <div 
-                v-for="(benefit, index) in benefits" 
+              <div
+                v-for="(benefit, index) in benefits"
                 :key="index"
                 class="flex items-center mt-4 space-x-4"
               >
                 <div class="flex-shrink-0">
-                  <img 
-                    src="/check-circle.svg" 
-                    alt="Check" 
+                  <img
+                    src="/check-circle.svg"
+                    alt="Check"
                     class="h-6 w-6"
                   />
                 </div>
@@ -57,10 +57,10 @@
             </div>
           </div>
           </div>
-          
+
           <!-- Right Content - Contact Form (Desktop) -->
           <div class="flex w-full mb-8 md:max-w-[360px] lg:max-w-[400px]">
-            <ContactForm />
+            <div id="edusky-externalform" style="width: 100%;" data-formid="2"></div>
           </div>
         </div>
       </div>
@@ -85,7 +85,7 @@ const benefits = ref([
 const scrollToForm = () => {
   const formElement = document.querySelector('#contact-form')
   if (formElement) {
-    formElement.scrollIntoView({ 
+    formElement.scrollIntoView({
       behavior: 'smooth',
       block: 'start'
     })
