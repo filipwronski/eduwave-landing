@@ -1,13 +1,13 @@
 <template>
-  <div class="min-h-screen bg-white">
+  <div class="min-h-screen bg-white bg-image">
     <!-- Hero Section -->
     <section class="relative overflow-hidden">
-      <div class="max-w-[1280px] mt-4 sm:mt-12 md:mt-16 lg:mt-24 mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex flex-col md:flex-row gap-[20px] lg:gap-5">
+      <div class="max-w-[1280px] mt-4 sm:mt-12 md:mt-16 lg:mt-18 mx-auto px-4 sm:px-6 lg:px-6">
+        <div class="flex flex-col md:flex-row gap-[20px] lg:gap-4">
           <!-- Left Content -->
-          <div class="flex w-full flex-col fade-in lg:pr-[120px]">
+          <div class="flex w-full flex-col fade-in lg:pr-[60px]">
             <!-- Logo -->
-            <div class="mb-8 mt-8 lg:mt-16">
+            <div class="mt-8 lg:mt-16">
               <img 
                 src="/logo.svg" 
                 alt="Eduwave Logo" 
@@ -16,14 +16,14 @@
             </div>
             
             <!-- Main Headline -->
-            <h1 class="text-4xl lg:text-5xl sm:text-[40px] xl:text-5xl font-bold text-black leading-tight mb-6 mt-16">
-              Korepetycje, które otwierają drzwi do Twoich celów
+            <h1 class="heading mt-20">
+              Korepetycje,&nbsp;które&nbsp;otwierają drzwi do Twoich celów
             </h1>
             
             <!-- Subtitle -->
-            <p class="text-lg lg:text-xl text-black leading-relaxed mb-12 max-w-2xl">
-              Od 11 lat wspieramy uczniów i studentów w osiąganiu ambitnych celów. 
-              Z Eduwave skutecznie przygotujesz się do egzaminów, poprawisz oceny i odkryjesz swój potencjał.
+            <p class="text mb-12">
+              Od 11 lat wspieramy uczniów i studentów w osiąganiu ambitnych celów.<br>
+              Z Eduwave skutecznie przygotujesz się do egzaminów, poprawisz oceny<br>i odkryjesz swój potencjał.
             </p>
             
             <!-- CTA Button -->
@@ -35,7 +35,7 @@
             </button>
 
             <div class="fade-in">
-            <h2 class="text-[20px] lg:text-4xl font-bold text-black mb-8">
+            <h2 class="subheading">
               Dlaczego Eduwave?
             </h2>
             
@@ -43,7 +43,7 @@
               <div 
                 v-for="(benefit, index) in benefits" 
                 :key="index"
-                class="flex items-center space-x-4"
+                class="flex items-center mt-4 space-x-4"
               >
                 <div class="flex-shrink-0">
                   <img 
@@ -52,9 +52,7 @@
                     class="h-6 w-6"
                   />
                 </div>
-                <p class="text-black text-sm lg:text-base  leading-relaxed">
-                  {{ benefit }}
-                </p>
+                <p class="text-small" v-html="benefit"></p>
               </div>
             </div>
           </div>
@@ -76,11 +74,11 @@ import ContactForm from './ContactForm.vue'
 
 // Benefits data
 const benefits = ref([
-  "Ponad 1100 zadowolonych uczniów",
+  "<b>Ponad 1100</b> zadowolonych uczniów",
   "Skuteczny program przygotowania do egzaminów – IB, A-levels, Matura, olimpiady",
-  "Doświadczenie pozauniwersyteckie – praktyka w przemyśle, działach R&D i projektach badawczych",
-  "Wyniki, które mówią same za siebie – średni wynik matury rozszerzonej z chemii w 2025 roku: 79% (IB HL 62%, SL 64%)",
-  "11 lat doświadczenia na rynku"
+  "Doświadczenie pozauniwersyteckie – praktyka w przemyśle, działach R&D i projektach<br> badawczych",
+  "Wyniki, które mówią same za siebie – średni wynik matury rozszerzonej z chemii w 2025 roku:<br><b>79%</b> (IB HL 62%, SL 64%)",
+  "<b>11 lat</b> doświadczenia na rynku"
 ])
 
 // Scroll to form function
@@ -94,3 +92,66 @@ const scrollToForm = () => {
   }
 }
 </script>
+
+<style lang="scss">
+  .bg-image {
+    background-image: url('/background.svg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  .heading {
+    color: #240A29;
+    font-size: 60px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 120%; /* 72px */
+    letter-spacing: -0.6px;
+    position: relative;
+    z-index: 1;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      right: 150px;
+      width: 465px;
+      height: 20px;
+      background-image: url('/line.svg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      z-index: -1;
+    }
+  }
+
+  .subheading {
+    color: #240A29;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 140%; /* 33.6px */
+    letter-spacing: -0.72px;
+  }
+
+  .text {
+    color: #240A29; 
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 140%;
+    letter-spacing: -0.2px;
+    opacity: 0.8;
+  }
+
+  .text-small {
+    color: #240A29;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 140%; /* 22.4px */
+    letter-spacing: -0.16px;
+    opacity: 0.8;
+  }
+</style>

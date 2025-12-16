@@ -1,13 +1,13 @@
 <template>
-  <div id="contact-form" class="bg-[#aac738] w-full rounded-2xl p-6 lg:p-6 shadow-lg">
-    <h3 class="text-2xl lg:text-2xl font-bold text-black mb-8">
+  <div id="contact-form" class="bg-[#671E75] w-full rounded-2xl py-8 px-6 shadow-lg">
+    <h3 class="text-2xl lg:text-2xl font-bold text-white mb-8">
       Umów się na konsultację
     </h3>
     
     <form @submit.prevent="handleSubmit">
       <!-- Name Field -->
       <div class="mb-4">
-        <label for="name" class="form-label">
+        <label for="name" class="form-label text-white">
           Imię
         </label>
         <input
@@ -16,7 +16,6 @@
           type="text"
           class="form-input"
           :class="{ 'border-red-500': errors.name }"
-          placeholder="Wprowadź swoje imię"
           @blur="validateField('name')"
         />
         <p v-if="errors.name" class="error-message">{{ errors.name }}</p>
@@ -33,7 +32,6 @@
           type="tel"
           class="form-input"
           :class="{ 'border-red-500': errors.phone }"
-          placeholder="Wprowadź numer telefonu"
           @blur="validateField('phone')"
         />
         <p v-if="errors.phone" class="error-message">{{ errors.phone }}</p>
@@ -50,7 +48,6 @@
           type="email"
           class="form-input"
           :class="{ 'border-red-500': errors.email }"
-          placeholder="Wprowadź adres email"
           @blur="validateField('email')"
         />
         <p v-if="errors.email" class="error-message">{{ errors.email }}</p>
@@ -66,7 +63,7 @@
           v-model="form.subject"
           class="form-input"
         >
-          <option value="">Wybierz przedmiot</option>
+          <option value="" disabled selected></option>
           <option value="matematyka">Matematyka</option>
           <option value="fizyka">Fizyka</option>
           <option value="chemia">Chemia</option>
@@ -90,7 +87,7 @@
           v-model="form.curriculum"
           class="form-input"
         >
-          <option value="">Wybierz program</option>
+          <option value="" disabled selected></option>
           <option value="matura">Matura</option>
           <option value="ib">International Baccalaureate (IB)</option>
           <option value="a-levels">A-levels</option>
@@ -110,7 +107,7 @@
               class="sr-only"
             />
             <div 
-              class="w-[18px] h-[18px] mr-2 bg-white border border-black cursor-pointer flex items-center justify-center"
+              class="w-[18px] h-[18px] mr-2 bg-white border rounded-[3px] cursor-pointer flex items-center justify-center"
               :class="{ 'border-red-500': errors.terms }"
               @click="form.terms = !form.terms"
             >
@@ -128,7 +125,7 @@
               </svg>
             </div>
           </div>
-          <label for="terms" class="text-normal text-black cursor-pointer">
+          <label for="terms" class="text-sm font-medium text-white cursor-pointer">
             Akceptuję warunki
           </label>
         </div>
@@ -271,3 +268,9 @@ const handleSubmit = async () => {
   }
 }
 </script>
+
+<style lang="scss"> 
+select option[value=""][disabled] {
+  display: none;
+}
+</style>
