@@ -2,7 +2,7 @@
   <div class="min-h-screen bg-white bg-image">
     <!-- Hero Section -->
     <section class="relative overflow-hidden">
-      <div class=" mt-4 sm:mt-12 md:mt-16 lg:mt-18 mx-auto px-4 sm:px-6 lg:px-6 mb-8">
+      <div class="max-w-[1280px] mt-4 sm:mt-12 md:mt-16 lg:mt-18 mx-auto px-4 sm:px-6 lg:px-6 mb-8">
         <div class="flex flex-col md:flex-row gap-[20px] lg:gap-4">
           <!-- Left Content -->
           <div class="flex w-full flex-col fade-in lg:pr-[60px]">
