@@ -2,28 +2,28 @@
   <div class="min-h-screen bg-white bg-image">
     <!-- Hero Section -->
     <section class="relative overflow-hidden">
-      <div class="max-w-[1280px] mt-4 sm:mt-12 md:mt-16 lg:mt-18 mx-auto px-4 sm:px-6 lg:px-6">
+      <div class=" mt-4 sm:mt-12 md:mt-16 lg:mt-18 mx-auto px-4 sm:px-6 lg:px-6 mb-8">
         <div class="flex flex-col md:flex-row gap-[20px] lg:gap-4">
           <!-- Left Content -->
           <div class="flex w-full flex-col fade-in lg:pr-[60px]">
             <!-- Logo -->
-            <div class="mt-8 lg:mt-16">
-              <img 
+            <img 
                 src="/logo.svg" 
                 alt="Eduwave Logo" 
-                class="max-w-[219px] h-auto"
+                class="max-w-[175px] md:max-w-[219px] h-auto"
               />
-            </div>
             
             <!-- Main Headline -->
-            <h1 class="heading mt-20 mb-8 md:mb-0">
+            <h1 class="heading mt-20 mb-8 md:mb-4">
               Korepetycje, które otwierają drzwi <span class="heading-line">do&nbsp;Twoich&nbsp;celów</span>
             </h1>
             
             <!-- Subtitle -->
-            <p class="text mb-12">
-              Od 11 lat wspieramy uczniów i studentów w osiąganiu ambitnych celów.<br>
-              Z Eduwave skutecznie przygotujesz się do egzaminów, poprawisz oceny<br>i odkryjesz swój potencjał.
+            <p class="text mb-4">
+              Od 11 lat wspieramy uczniów i&nbsp;studentów w&nbsp;osiąganiu ambitnych celów.<br>
+            </p>
+            <p class="text mb-12 max-w-[650px]">
+              Z Eduwave skutecznie przygotujesz się do egzaminów, poprawisz oceny i&nbsp;odkryjesz swój potencjał.
             </p>
             
             <!-- CTA Button -->
@@ -59,7 +59,7 @@
           </div>
           
           <!-- Right Content - Contact Form (Desktop) -->
-          <div class="flex w-full mt-8 mb-8 md:max-w-[360px] lg:max-w-[400px] lg:mt-16">
+          <div class="flex w-full mb-8 md:max-w-[360px] lg:max-w-[400px]">
             <ContactForm />
           </div>
         </div>
