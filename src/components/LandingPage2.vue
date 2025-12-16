@@ -69,8 +69,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import ContactForm from './ContactForm.vue'
+import { ref, onMounted } from 'vue'
 
 // Benefits data
 const benefits = ref([
@@ -91,6 +90,39 @@ const scrollToForm = () => {
     })
   }
 }
+
+// Load Edusky script dynamically
+const loadEduskyScript = () => {
+  // Check if script is already loaded
+  if (document.querySelector('script[src*="edusky.pl/externalform"]')) {
+    console.log('Edusky script already loaded')
+    return
+  }
+
+  console.log('Loading Edusky script...')
+  const script = document.createElement('script')
+  script.src = 'https://eduwave.edusky.pl/externalform/v2/js/script.js'
+  script.async = true
+
+  // Add error handling
+  script.onerror = () => {
+    console.error('Failed to load Edusky script')
+  }
+
+  script.onload = () => {
+    console.log('Edusky script loaded successfully')
+  }
+
+  document.head.appendChild(script)
+}
+
+// Load script when component is mounted
+onMounted(() => {
+  // Small delay to ensure DOM is ready
+  setTimeout(() => {
+    loadEduskyScript()
+  }, 100)
+})
 </script>
 
 <style lang="scss">
