@@ -1,10 +1,19 @@
 <template>
   <div id="contact-form" class="bg-[#671E75] w-full rounded-2xl py-8 px-6 shadow-lg">
-    <h3 class="text-2xl lg:text-2xl font-bold text-white mb-8">
+    <h3 class="text-2xl lg:text-2xl font-bold text-white">
       Umów się na konsultację
     </h3>
-    
-    <form @submit.prevent="handleSubmit">
+
+    <Transition name="fade" mode="out-in">
+      <FormSuccess
+        v-if="isSuccess"
+        @sendAnotherRequest="isSuccess = false"
+      />
+
+      <form v-else
+        @submit.prevent="handleSubmit"
+        class="mt-8"
+      >
       <!-- Name Field -->
       <div class="mb-4">
         <label for="name" class="form-label text-white">
@@ -14,11 +23,13 @@
           id="name"
           v-model="form.name"
           type="text"
-          class="form-input"
-          :class="{ 'border-red-500': errors.name }"
+          class="form-input shadow-none focus:border-error-color focus:ring-0 focus:ring-offset-0"
+          :class="{ 'border-error-color': errors.name }"
           @blur="validateField('name')"
         />
-        <p v-if="errors.name" class="error-message">{{ errors.name }}</p>
+        <p v-if="errors.name" class="error-message flex items-center mt-2">
+          <img src="/warning-outline.svg" alt="Warning" class="w-4 h-4 mr-2" />
+        {{ errors.name }}</p>
       </div>
       
       <!-- Phone Field -->
@@ -30,11 +41,13 @@
           id="phone"
           v-model="form.phone"
           type="tel"
-          class="form-input"
-          :class="{ 'border-red-500': errors.phone }"
+          class="form-input shadow-none focus:border-error-color focus:ring-0 focus:ring-offset-0"
+          :class="{ 'border-error-color': errors.phone }"
           @blur="validateField('phone')"
         />
-        <p v-if="errors.phone" class="error-message">{{ errors.phone }}</p>
+        <p v-if="errors.phone" class="error-message flex items-center mt-2">
+          <img src="/warning-outline.svg" alt="Warning" class="w-4 h-4 mr-2" />
+        {{ errors.phone }}</p>
       </div>
       
       <!-- Email Field -->
@@ -46,11 +59,14 @@
           id="email"
           v-model="form.email"
           type="email"
-          class="form-input"
-          :class="{ 'border-red-500': errors.email }"
+          class="form-input shadow-none focus:border-error-color focus:ring-0 focus:ring-offset-0"
+          :class="{ 'border-error-color': errors.email }"
           @blur="validateField('email')"
         />
-        <p v-if="errors.email" class="error-message">{{ errors.email }}</p>
+        <p v-if="errors.email" class="error-message flex items-center mt-2">
+          <img src="/warning-outline.svg" alt="Warning" class="w-4 h-4 mr-2" />
+          {{ errors.email }}
+        </p>
       </div>
       
       <!-- Subject Field -->
@@ -61,7 +77,7 @@
         <select
           id="subject"
           v-model="form.subject"
-          class="form-input"
+          class="form-input shadow-none focus:border-error-color focus:ring-0 focus:ring-offset-0"
         >
           <option value="" disabled selected></option>
           <option value="matematyka">Matematyka</option>
@@ -85,7 +101,7 @@
         <select
           id="curriculum"
           v-model="form.curriculum"
-          class="form-input"
+          class="form-input shadow-none focus:border-error-color focus:ring-0 focus:ring-offset-0"
         >
           <option value="" disabled selected></option>
           <option value="matura">Matura</option>
@@ -95,10 +111,37 @@
           <option value="inny">Inny</option>
         </select>
       </div>
+
+      <!-- Additional information Field -->
+      <div class="mb-4">
+        <label
+          for="additional-information"
+          class="form-label cursor-pointer"
+          :class="{ 'text-error-color': errors.additionalInformation }"
+          @click="hasAdditionalInformation = !hasAdditionalInformation"
+        >
+          + <span class="dotted-underline">Dodatkowe informacje (nieobowiązkowo)</span>
+        </label>
+        <Transition name="expand">
+          <div v-if="hasAdditionalInformation" class="mt-2">
+            <textarea
+              id="additional-information"
+              v-model="form.additionalInformation"
+              class="form-input shadow-none focus:border-error-color focus:ring-0 focus:ring-offset-0"
+            ></textarea>
+          </div>
+        </Transition>
+        <transition name="fade" mode="out-in">
+          <p v-if="errors.additionalInformation" class="error-message flex items-center mt-2">
+            <img src="/warning-outline.svg" alt="Warning" class="w-4 h-4 mr-2" />
+            {{ errors.additionalInformation }}
+          </p>
+        </transition>
+      </div>
       
       <div class="mb-8">
         <!-- Terms Checkbox -->
-        <div class="flex items-center" >
+        <div class="flex items-start" >
           <div class="relative">
             <input
               id="terms"
@@ -108,7 +151,7 @@
             />
             <div 
               class="w-[18px] h-[18px] mr-2 bg-white border rounded-[3px] cursor-pointer flex items-center justify-center"
-              :class="{ 'border-red-500': errors.terms }"
+              :class="{ 'border-error-color': errors.terms }"
               @click="form.terms = !form.terms"
             >
               <svg 
@@ -125,11 +168,15 @@
               </svg>
             </div>
           </div>
-          <label for="terms" class="text-sm font-medium text-white cursor-pointer">
-            Akceptuję warunki
+          <label for="terms" class="text-[13px] font-medium text-white cursor-pointer">
+            <!-- todo: dodać polityke -->
+            Zapoznałem/am się z <a href="/polityka-prywatnosci" class="dotted-underline">Polityką prywatności</a> i wyrażam zgodę na przetwarzanie danych osobowych
           </label>
         </div>
-        <p v-if="errors.terms" class="error-message">{{ errors.terms }}</p>
+        <p v-if="errors.terms" class="error-message flex items-center mt-2">
+          <img src="/warning-outline.svg" alt="Warning" class="w-4 h-4 mr-2" />
+          {{ errors.terms }}
+        </p>
       </div>
       
       
@@ -149,11 +196,15 @@
         </span>
       </button>
     </form>
+    </Transition>
   </div>
 </template>
 
 <script setup>
 import { ref, reactive } from 'vue'
+import FormSuccess from './FormSuccess.vue'
+
+const isSuccess = ref(false)
 
 // Form data
 const form = reactive({
@@ -162,6 +213,7 @@ const form = reactive({
   email: '',
   subject: '',
   curriculum: '',
+  additionalInformation: '',
   terms: false
 })
 
@@ -217,6 +269,8 @@ const isValidPhone = (phone) => {
   return phoneRegex.test(cleanPhone)
 }
 
+const hasAdditionalInformation = ref(false)
+
 // Form submission
 const handleSubmit = async () => {
   // Validate all required fields
@@ -243,12 +297,13 @@ const handleSubmit = async () => {
       email: form.email,
       subject: form.subject,
       curriculum: form.curriculum,
+      additionalInformation: form.additionalInformation,
       terms: form.terms,
       timestamp: new Date().toISOString()
     })
     
     // Show success message (you can replace this with actual success handling)
-    alert('Dziękujemy! Twoja wiadomość została wysłana. Skontaktujemy się z Tobą wkrótce.')
+    isSuccess.value = true
     
     // Reset form
     Object.assign(form, {
@@ -257,6 +312,7 @@ const handleSubmit = async () => {
       email: '',
       subject: '',
       curriculum: '',
+      additionalInformation: '',
       terms: false
     })
     
@@ -269,8 +325,48 @@ const handleSubmit = async () => {
 }
 </script>
 
-<style lang="scss"> 
-select option[value=""][disabled] {
-  display: none;
-}
+<style lang="scss">
+  select option[value=""][disabled] {
+    display: none;
+  }
+
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: opacity 0.3s ease;
+  }
+  .fade-enter-from,
+  .fade-leave-to {
+    opacity: 0;
+  }
+
+  .expand-enter-active {
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+  }
+  .expand-leave-active {
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+  }
+  .expand-enter-from {
+    max-height: 0;
+    opacity: 0;
+    transform: scaleY(0);
+    transform-origin: top;
+  }
+  .expand-enter-to {
+    max-height: 500px;
+    opacity: 1;
+    transform: scaleY(1);
+  }
+  .expand-leave-from {
+    max-height: 500px;
+    opacity: 1;
+    transform: scaleY(1);
+  }
+  .expand-leave-to {
+    max-height: 0;
+    opacity: 0;
+    transform: scaleY(0);
+    transform-origin: top;
+  }
 </style>

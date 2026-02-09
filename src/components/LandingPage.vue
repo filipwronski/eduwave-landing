@@ -3,13 +3,13 @@
     <!-- Hero Section -->
     <section class="relative overflow-hidden">
       <div class="max-w-[1280px] mt-4 sm:mt-12 md:mt-16 lg:mt-18 mx-auto px-4 sm:px-6 lg:px-6 mb-8">
-        <div class="flex flex-col md:flex-row gap-[20px] lg:gap-4">
+        <div class="flex flex-col md:flex-row gap-9 lg:gap-4">
           <!-- Left Content -->
           <div class="flex w-full flex-col fade-in lg:pr-[60px]">
             <!-- Logo -->
             <img 
                 src="/logo.svg" 
-                alt="Eduwave Logo" 
+                alt="Eduwave - szkoła korepetycji" 
                 class="max-w-[175px] md:max-w-[219px] h-auto"
               />
             
@@ -19,10 +19,8 @@
             </h1>
             
             <!-- Subtitle -->
-            <p class="text mb-4">
+            <p class="text mb-9 max-w-[740px]">
               Od 11 lat wspieramy uczniów i&nbsp;studentów w&nbsp;osiąganiu ambitnych celów.<br>
-            </p>
-            <p class="text mb-12 max-w-[650px]">
               Z Eduwave skutecznie przygotujesz się do egzaminów, poprawisz oceny i&nbsp;odkryjesz swój potencjał.
             </p>
             
@@ -56,11 +54,28 @@
               </div>
             </div>
           </div>
-          </div>
+          <footer class="hidden items-center gap-2 align-bottom mt-auto md:flex">
+            <p class="text-small">
+              <span class="text-neutral-darker">
+                &copy; {{ new Date().getFullYear() }} Eduwave. Wszelkie prawa zastrzeżone.
+              </span>
+            </p>
+            <a href="/polityka-prywatnosci" class="text-neutral-darker">Polityka prywatności</a>
+          </footer>
+        </div>
           
           <!-- Right Content - Contact Form (Desktop) -->
-          <div class="flex w-full mb-8 md:max-w-[360px] lg:max-w-[400px]">
+          <div class="flex w-full flex-col md:max-w-[360px] lg:max-w-[400px]">
             <ContactForm />
+
+            <footer class="flex flex-col items-center gap-6 align-bottom mt-9 md:hidden">
+              <p class="text-small text-center">
+                <span class="text-neutral-darker">
+                  &copy; {{ new Date().getFullYear() }} Eduwave. Wszelkie prawa zastrzeżone.
+                </span>
+              </p>
+              <a href="/polityka-prywatnosci" class="text-neutral-darker">Polityka prywatności</a>
+            </footer>
           </div>
         </div>
       </div>
