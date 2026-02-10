@@ -54,13 +54,13 @@
               </div>
             </div>
           </div>
-          <footer class="hidden items-center gap-2 align-bottom mt-auto md:flex">
-            <p class="text-small">
+          <footer class="hidden items-center gap-8 align-bottom mt-auto md:flex">
+            <p class="text-[13px]">
               <span class="text-neutral-darker">
                 &copy; {{ new Date().getFullYear() }} Eduwave. Wszelkie prawa zastrzeżone.
               </span>
             </p>
-            <a href="/polityka-prywatnosci" class="text-neutral-darker">Polityka prywatności</a>
+            <a href="/polityka-prywatnosci" class="text-neutral-darker text-[13px]">Polityka prywatności</a>
           </footer>
         </div>
           
@@ -70,11 +70,11 @@
 
             <footer class="flex flex-col items-center gap-6 align-bottom mt-9 md:hidden">
               <p class="text-small text-center">
-                <span class="text-neutral-darker">
+                <span class="text-neutral-darker text-[13px]">
                   &copy; {{ new Date().getFullYear() }} Eduwave. Wszelkie prawa zastrzeżone.
                 </span>
               </p>
-              <a href="/polityka-prywatnosci" class="text-neutral-darker">Polityka prywatności</a>
+              <a href="/polityka-prywatnosci" class="text-neutral-darker text-[13px]">Polityka prywatności</a>
             </footer>
           </div>
         </div>

@@ -1,16 +1,17 @@
 <template>
   <div id="contact-form" class="bg-[#671E75] w-full h-full rounded-2xl py-8 px-6 shadow-lg">
-    <h3 class="text-2xl lg:text-2xl font-bold text-white">
-      Umów się na konsultację
-    </h3>
-
     <Transition name="fade" mode="out-in">
       <FormSuccess
         v-if="isSuccess"
         @sendAnotherRequest="isSuccess = false"
       />
 
-      <form v-else
+      <div  v-else>
+        <h3 class="text-2xl lg:text-2xl font-bold text-white">
+          Umów się na konsultację
+        </h3>
+
+        <form
         @submit.prevent="handleSubmit"
         class="mt-8"
       >
@@ -127,7 +128,7 @@
             <textarea
               id="additional-information"
               v-model="form.additionalInformation"
-              class="form-input shadow-none focus:border-error-color focus:ring-0 focus:ring-offset-0"
+              class="form-input min-h-[100px] shadow-none focus:border-error-color focus:ring-0 focus:ring-offset-0"
             ></textarea>
           </div>
         </Transition>
@@ -138,6 +139,17 @@
           </p>
         </transition>
       </div>
+
+      <!-- Honeypot field (hidden from users, catches bots) -->
+      <input
+        type="text"
+        v-model="form.website"
+        name="website"
+        tabindex="-1"
+        autocomplete="off"
+        style="position: absolute; left: -9999px;"
+        aria-hidden="true"
+      />
       
       <div class="mb-8">
         <!-- Terms Checkbox -->
@@ -196,6 +208,7 @@
         </span>
       </button>
     </form>
+      </div>
     </Transition>
   </div>
 </template>
@@ -214,7 +227,8 @@ const form = reactive({
   subject: '',
   curriculum: '',
   additionalInformation: '',
-  terms: false
+  terms: false,
+  website: '' // Honeypot field - should remain empty
 })
 
 // Form state
@@ -271,57 +285,76 @@ const isValidPhone = (phone) => {
 
 const hasAdditionalInformation = ref(false)
 
+// Google Apps Script Web App URL (replace with your deployed URL)
+const GOOGLE_SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE'
+
 // Form submission
 const handleSubmit = async () => {
+  // Bot detection - if honeypot field is filled, it's a bot
+  // if (form.website) {
+  //   console.log('Bot detected');
+  //   return;
+  // }
+
   // Validate all required fields
   validateField('name')
   validateField('phone')
   validateField('email')
   validateField('terms')
-  
+
   // Check if there are any errors
   if (Object.keys(errors).length > 0) {
     return
   }
-  
+
   isSubmitting.value = true
-  
-  try {
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 2000))
-    
-    // Log form data (as requested)
-    console.log('Form submitted with data:', {
-      name: form.name,
-      phone: form.phone,
-      email: form.email,
-      subject: form.subject,
-      curriculum: form.curriculum,
-      additionalInformation: form.additionalInformation,
-      terms: form.terms,
-      timestamp: new Date().toISOString()
-    })
-    
-    // Show success message (you can replace this with actual success handling)
-    isSuccess.value = true
-    
-    // Reset form
-    Object.assign(form, {
-      name: '',
-      phone: '',
-      email: '',
-      subject: '',
-      curriculum: '',
-      additionalInformation: '',
-      terms: false
-    })
-    
-  } catch (error) {
-    console.error('Error submitting form:', error)
-    alert('Wystąpił błąd podczas wysyłania formularza. Spróbuj ponownie.')
-  } finally {
-    isSubmitting.value = false
-  }
+
+  // try {
+  //   // Send data to Google Sheets
+  //   const response = await fetch(GOOGLE_SCRIPT_URL, {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //     body: JSON.stringify({
+  //       name: form.name,
+  //       phone: form.phone,
+  //       email: form.email,
+  //       subject: form.subject,
+  //       curriculum: form.curriculum,
+  //       additionalInformation: form.additionalInformation,
+  //       timestamp: new Date().toISOString()
+  //     })
+  //   })
+
+  //   const result = await response.json()
+
+    if (true) {
+    // if (result.success) {
+      // Show success message
+      isSuccess.value = true
+
+      // Reset form
+      Object.assign(form, {
+        name: '',
+        phone: '',
+        email: '',
+        subject: '',
+        curriculum: '',
+        additionalInformation: '',
+        terms: false,
+        website: ''
+      })
+    } else {
+      throw new Error(result.error || 'Unknown error')
+    }
+
+  // } catch (error) {
+  //   console.error('Error submitting form:', error)
+  //   alert('Wystąpił błąd podczas wysyłania formularza. Spróbuj ponownie.')
+  // } finally {
+  //   isSubmitting.value = false
+  // }
 }
 </script>
 
