@@ -47,10 +47,24 @@ function validateData(data) {
   };
 }
 
+// Handle preflight requests
+function doGet(e) {
+  return ContentService
+    .createTextOutput(JSON.stringify({ status: 'OK' }))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
 function doPost(e) {
   try {
-    // Check rate limit based on a combination of fields
-    const data = JSON.parse(e.postData.contents);
+    // Parse data from URL-encoded or JSON format
+    let data;
+    try {
+      data = JSON.parse(e.postData.contents);
+    } catch {
+      // If JSON parsing fails, try to parse as URL-encoded
+      data = e.parameter;
+    }
+
     const identifier = data.phone || data.email || 'anonymous';
 
     if (!checkRateLimit(identifier)) {

@@ -54,13 +54,15 @@
               </div>
             </div>
           </div>
-          <footer class="hidden items-center gap-8 align-bottom mt-auto md:flex">
+
+          <!-- Footer Desktop -->
+          <footer class="hidden items-center gap-8 align-bottom mt-4 md:flex">
             <p class="text-[13px]">
               <span class="text-neutral-darker">
                 &copy; {{ new Date().getFullYear() }} Eduwave. Wszelkie prawa zastrzeżone.
               </span>
             </p>
-            <a href="/polityka-prywatnosci" class="text-neutral-darker text-[13px]">Polityka prywatności</a>
+            <a href="/polityka-prywatnosci" class="text-neutral-darker text-[13px] visited:text-neutral-darker">Polityka prywatności</a>
           </footer>
         </div>
           
@@ -68,13 +70,15 @@
           <div class="flex w-full flex-col md:max-w-[360px] lg:max-w-[400px]">
             <ContactForm />
 
-            <footer class="flex flex-col items-center gap-6 align-bottom mt-9 md:hidden">
-              <p class="text-small text-center">
-                <span class="text-neutral-darker text-[13px]">
+            <!-- Footer Mobile -->
+            <footer class="flex align-bottom  justify-center mt-9 md:hidden">
+              <p class="flex flex-col items-center justify-center gap-2 text-neutral-darker">
+                <span class="text-[13px] antialiased">
                   &copy; {{ new Date().getFullYear() }} Eduwave. Wszelkie prawa zastrzeżone.
                 </span>
+
+                <a href="/polityka-prywatnosci" class="text-[13px] antialiased">Polityka prywatności</a>
               </p>
-              <a href="/polityka-prywatnosci" class="text-neutral-darker text-[13px]">Polityka prywatności</a>
             </footer>
           </div>
         </div>

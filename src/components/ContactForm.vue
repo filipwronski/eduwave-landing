@@ -1,5 +1,5 @@
 <template>
-  <div id="contact-form" class="bg-[#671E75] w-full h-full rounded-2xl py-8 px-6 shadow-lg">
+  <div id="contact-form" class="bg-[#671E75] w-full h-full rounded-2xl py-8 px-6 shadow-lg min-h-[660px] flex justify-center items-center">
     <Transition name="fade" mode="out-in">
       <FormSuccess
         v-if="isSuccess"
@@ -286,15 +286,15 @@ const isValidPhone = (phone) => {
 const hasAdditionalInformation = ref(false)
 
 // Google Apps Script Web App URL (replace with your deployed URL)
-const GOOGLE_SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE'
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyj1DyMRA2xYF_9woPi8hdGQ63VEJMZa_5ho4v-G3mrZIcrFf8YJm5XZQR_uFwR7lSk/exec'
 
 // Form submission
 const handleSubmit = async () => {
   // Bot detection - if honeypot field is filled, it's a bot
-  // if (form.website) {
-  //   console.log('Bot detected');
-  //   return;
-  // }
+  if (form.website) {
+    console.log('Bot detected');
+    return;
+  }
 
   // Validate all required fields
   validateField('name')
@@ -309,52 +309,51 @@ const handleSubmit = async () => {
 
   isSubmitting.value = true
 
-  // try {
-  //   // Send data to Google Sheets
-  //   const response = await fetch(GOOGLE_SCRIPT_URL, {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body: JSON.stringify({
-  //       name: form.name,
-  //       phone: form.phone,
-  //       email: form.email,
-  //       subject: form.subject,
-  //       curriculum: form.curriculum,
-  //       additionalInformation: form.additionalInformation,
-  //       timestamp: new Date().toISOString()
-  //     })
-  //   })
+  try {
+    // Send data to Google Sheets using URLSearchParams to avoid CORS
+    const formData = new URLSearchParams({
+      name: form.name,
+      phone: form.phone,
+      email: form.email,
+      subject: form.subject,
+      curriculum: form.curriculum,
+      additionalInformation: form.additionalInformation,
+      timestamp: new Date().toISOString()
+    })
 
-  //   const result = await response.json()
+    const response = await fetch(GOOGLE_SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors', // This bypasses CORS for development
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: formData
+    })
 
-    if (true) {
-    // if (result.success) {
-      // Show success message
-      isSuccess.value = true
+    // With no-cors mode, we can't read the response, but we assume success
+    // if no error was thrown
 
-      // Reset form
-      Object.assign(form, {
-        name: '',
-        phone: '',
-        email: '',
-        subject: '',
-        curriculum: '',
-        additionalInformation: '',
-        terms: false,
-        website: ''
-      })
-    } else {
-      throw new Error(result.error || 'Unknown error')
-    }
+    // Show success message
+    isSuccess.value = true
 
-  // } catch (error) {
-  //   console.error('Error submitting form:', error)
-  //   alert('Wystąpił błąd podczas wysyłania formularza. Spróbuj ponownie.')
-  // } finally {
-  //   isSubmitting.value = false
-  // }
+    // Reset form
+    Object.assign(form, {
+      name: '',
+      phone: '',
+      email: '',
+      subject: '',
+      curriculum: '',
+      additionalInformation: '',
+      terms: false,
+      website: ''
+    })
+
+  } catch (error) {
+    console.error('Error submitting form:', error)
+    alert('Wystąpił błąd podczas wysyłania formularza. Spróbuj ponownie.')
+  } finally {
+    isSubmitting.value = false
+  }
 }
 </script>
 
