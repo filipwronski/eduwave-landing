@@ -62,7 +62,8 @@
                 &copy; {{ new Date().getFullYear() }} Eduwave. Wszelkie prawa zastrzeżone.
               </span>
             </p>
-            <a href="/polityka-prywatnosci" class="text-neutral-darker text-[13px] visited:text-neutral-darker">Polityka prywatności</a>
+
+            <a href="/polityka-prywatnosci" class="text-neutral-darker text-[13px] visited:text-neutral-darker hover:text-black">Polityka prywatności</a>
           </footer>
         </div>
           
@@ -77,7 +78,7 @@
                   &copy; {{ new Date().getFullYear() }} Eduwave. Wszelkie prawa zastrzeżone.
                 </span>
 
-                <a href="/polityka-prywatnosci" class="text-[13px] antialiased">Polityka prywatności</a>
+                <a href="/polityka-prywatnosci" class="text-[13px] antialiased hover:text-black">Polityka prywatności</a>
               </p>
             </footer>
           </div>

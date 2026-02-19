@@ -1,0 +1,203 @@
+/* Cookie Consent Customization - Eduwave Style */
+
+:root {
+  --cc-bg: #fff;
+  --cc-text: #240A29;
+  --cc-btn-primary-bg: #FE5F55;
+  --cc-btn-primary-hover-bg: #e54e44;
+}
+
+/* Font family */
+#cc-main {
+  font-family: "Host Grotesk", sans-serif !important;
+}
+
+/* Modal containers */
+#cc-main .cm,
+#cc-main .pm {
+  background: #fff !important;
+  border-radius: 16px !important;
+  box-shadow: 0 8px 32px rgba(36, 10, 41, 0.15) !important;
+  border: 1px solid rgba(36, 10, 41, 0.1) !important;
+}
+
+/* Main modal title */
+#cc-main .cm__title,
+#cc-main .pm__title {
+  color: #240A29 !important;
+  font-weight: 600 !important;
+  font-family: "Host Grotesk", sans-serif !important;
+}
+
+/* Main modal description */
+#cc-main .cm__desc {
+  color: #240A29 !important;
+  opacity: 0.8;
+  font-family: "Host Grotesk", sans-serif !important;
+}
+
+/* ===== BUTTONS - Only in consent modal and footer ===== */
+
+/* Consent modal buttons */
+#cc-main .cm__btn-group button {
+  border-radius: 99px !important;
+  font-weight: 700 !important;
+  padding: 12px 24px !important;
+  transition: all 0.3s ease !important;
+  font-family: "Host Grotesk", sans-serif !important;
+  font-size: 16px !important;
+}
+
+/* Preferences modal footer buttons */
+#cc-main .pm__footer button {
+  border-radius: 99px !important;
+  font-weight: 700 !important;
+  padding: 12px 24px !important;
+  transition: all 0.3s ease !important;
+  font-family: "Host Grotesk", sans-serif !important;
+  font-size: 16px !important;
+}
+
+/* Primary button - Accept all */
+#cc-main button[data-role="all"] {
+  background: #FE5F55 !important;
+  color: #fff !important;
+  border: none !important;
+  box-shadow: 0 4px 24px 0 rgba(254, 95, 85, 0.10) !important;
+}
+
+#cc-main button[data-role="all"]:hover {
+  background: #e54e44 !important;
+  box-shadow: 0 6px 28px 0 rgba(254, 95, 85, 0.20) !important;
+  transform: translateY(-1px);
+}
+
+/* Secondary buttons - Reject/Manage/Save */
+#cc-main button[data-role="necessary"],
+#cc-main button[data-role="show"],
+#cc-main button[data-role="save"] {
+  background: transparent !important;
+  color: #240A29 !important;
+  border: 2px solid #240A29 !important;
+}
+
+#cc-main button[data-role="necessary"]:hover,
+#cc-main button[data-role="show"]:hover,
+#cc-main button[data-role="save"]:hover {
+  background: rgba(36, 10, 41, 0.05) !important;
+  transform: translateY(-1px);
+}
+
+/* ===== SECTION HEADERS - Grid layout ===== */
+
+#cc-main .pm__section {
+  border-bottom: 1px solid rgba(36, 10, 41, 0.1) !important;
+}
+
+/* Section header button - expand/collapse */
+#cc-main .pm__section-header > button {
+  display: grid !important;
+  grid-template-columns: 20px 1fr 60px !important;
+  align-items: center !important;
+  gap: 12px !important;
+  width: 100% !important;
+  padding: 16px 0 !important;
+  border-radius: 0 !important;
+  border: none !important;
+  background: transparent !important;
+  font-weight: 600 !important;
+  text-align: left !important;
+  font-family: "Host Grotesk", sans-serif !important;
+}
+
+#cc-main .pm__section-header > button:hover {
+  background: transparent !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* Arrow position */
+#cc-main .pm__section-header .pm__section-arrow {
+  grid-column: 1 !important;
+}
+
+/* Title position */
+#cc-main .pm__section-header .pm__section-title-wrapper {
+  grid-column: 2 !important;
+}
+
+#cc-main .pm__section-header .section__title {
+  color: #240A29 !important;
+  font-weight: 600 !important;
+}
+
+/* Toggle position */
+#cc-main .pm__section-header .section__toggle-wrapper {
+  grid-column: 3 !important;
+  justify-self: end !important;
+}
+
+/* Toggle switch styling */
+#cc-main .pm__section-header .section__toggle {
+  background: #ddd !important;
+  border-radius: 99px !important;
+  width: 48px !important;
+  height: 24px !important;
+}
+
+#cc-main .pm__section-header .section__toggle.toggle--on {
+  background: #FE5F55 !important;
+}
+
+/* ===== OTHER ELEMENTS ===== */
+
+/* Links */
+#cc-main a {
+  color: #FE5F55 !important;
+  text-decoration: underline !important;
+  text-decoration-style: dotted !important;
+  font-weight: 500 !important;
+}
+
+#cc-main a:hover {
+  opacity: 0.8;
+}
+
+/* Footer */
+#cc-main .cm__footer {
+  border-top: none !important;
+  background: #fff !important;
+}
+
+/* Cookie table - only style text */
+#cc-main table {
+  font-family: "Host Grotesk", sans-serif !important;
+}
+
+#cc-main table th {
+  color: #240A29 !important;
+  font-weight: 600 !important;
+}
+
+#cc-main table td {
+  color: #240A29 !important;
+  opacity: 0.8;
+}
+
+#cc-main .cm__body .cm__btns {
+  border-top: none !important;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  #cc-main .cm {
+    border-radius: 16px 16px 0 0 !important;
+    margin: 0 !important;
+  }
+
+  #cc-main .cm__btn-group button,
+  #cc-main .pm__footer button {
+    font-size: 14px !important;
+    padding: 10px 20px !important;
+  }
+}

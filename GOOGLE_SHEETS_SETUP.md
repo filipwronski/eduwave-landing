@@ -21,11 +21,29 @@
 
 ### Step 1: Create Google Sheet
 1. Create new Google Sheet at sheets.google.com
-2. Name it "Contact Form Submissions"
-3. Add headers in row 1:
+2. Name it "Eduwave Leads"
+3. **IMPORTANT:** The script will automatically create headers on first run, OR you can manually add them in row 1:
    ```
-   Timestamp | Name | Phone | Email | Subject | Curriculum | Additional Information
+   lead_id | created_at | name | phone | email | subject | level | message |
+   source | experiment_variant | consent | status | notes |
+   utm_source | utm_medium | utm_campaign | utm_term | utm_content
    ```
+
+   **Column descriptions:**
+   - `lead_id` - Unique lead identifier (auto-generated)
+   - `created_at` - ISO timestamp when form was submitted
+   - `name` - User's name
+   - `phone` - User's phone number
+   - `email` - User's email (optional)
+   - `subject` - Selected subject (matematyka, fizyka, etc.)
+   - `level` - Education level (matura, IB, A-levels, etc.)
+   - `message` - Additional information from user
+   - `source` - Traffic source (UTM or GA client ID or "direct")
+   - `experiment_variant` - Growthbook A/B test variant
+   - `consent` - Cookie consent categories accepted
+   - `status` - Lead status (default: "new") - for manual management
+   - `notes` - Notes field - for manual management
+   - `utm_source`, `utm_medium`, `utm_campaign`, `utm_term`, `utm_content` - UTM tracking parameters
 
 ### Step 2: Deploy Apps Script
 1. In Google Sheet: **Extensions → Apps Script**
@@ -63,12 +81,23 @@
    ```
 
 2. **Email Notifications**
-   Uncomment lines 59-63 in `google-apps-script.js`:
+   Uncomment the email notification section in `google-apps-script.js` (around line 165):
    ```javascript
    MailApp.sendEmail({
      to: 'your-email@example.com',
-     subject: 'New Contact Form Submission',
-     body: `New submission from ${validatedData.name}`
+     subject: `New Lead: ${validatedData.name}`,
+     body: `
+       New lead submitted:
+
+       Lead ID: ${validatedData.lead_id}
+       Name: ${validatedData.name}
+       Phone: ${validatedData.phone}
+       Email: ${validatedData.email}
+       Subject: ${validatedData.subject}
+       Level: ${validatedData.level}
+       Source: ${validatedData.source}
+       Consent: ${validatedData.consent}
+     `
    });
    ```
 

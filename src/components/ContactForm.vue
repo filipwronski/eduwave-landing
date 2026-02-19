@@ -24,6 +24,7 @@
           id="name"
           v-model="form.name"
           type="text"
+          data-field="name"
           class="form-input shadow-none focus:border-error-color focus:ring-0 focus:ring-offset-0"
           :class="{ 'border-error-color': errors.name }"
           @blur="validateField('name')"
@@ -42,6 +43,7 @@
           id="phone"
           v-model="form.phone"
           type="tel"
+          data-field="phone"
           class="form-input shadow-none focus:border-error-color focus:ring-0 focus:ring-offset-0"
           :class="{ 'border-error-color': errors.phone }"
           @blur="validateField('phone')"
@@ -60,6 +62,7 @@
           id="email"
           v-model="form.email"
           type="email"
+          data-field="email"
           class="form-input shadow-none focus:border-error-color focus:ring-0 focus:ring-offset-0"
           :class="{ 'border-error-color': errors.email }"
           @blur="validateField('email')"
@@ -78,6 +81,7 @@
         <select
           id="subject"
           v-model="form.subject"
+          data-field="subject"
           class="form-input shadow-none focus:border-error-color focus:ring-0 focus:ring-offset-0"
         >
           <option value="" disabled selected></option>
@@ -102,6 +106,7 @@
         <select
           id="curriculum"
           v-model="form.curriculum"
+          data-field="level"
           class="form-input shadow-none focus:border-error-color focus:ring-0 focus:ring-offset-0"
         >
           <option value="" disabled selected></option>
@@ -128,6 +133,7 @@
             <textarea
               id="additional-information"
               v-model="form.additionalInformation"
+              data-field="message"
               class="form-input min-h-[100px] shadow-none focus:border-error-color focus:ring-0 focus:ring-offset-0"
             ></textarea>
           </div>
@@ -216,6 +222,7 @@
 <script setup>
 import { ref, reactive } from 'vue'
 import FormSuccess from './FormSuccess.vue'
+import * as CookieConsent from 'vanilla-cookieconsent'
 
 const isSuccess = ref(false)
 
@@ -285,8 +292,88 @@ const isValidPhone = (phone) => {
 
 const hasAdditionalInformation = ref(false)
 
-// Google Apps Script Web App URL (replace with your deployed URL)
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyj1DyMRA2xYF_9woPi8hdGQ63VEJMZa_5ho4v-G3mrZIcrFf8YJm5XZQR_uFwR7lSk/exec'
+// Google Apps Script Web App URL
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwGgoScd7EzdBfKYbnXOITig5NdlKk6Lrnuzl7yIi03EwZvOOUAp7Qa6evw5wrACRg6zQ/exec'
+
+// Helper functions for analytics
+function generateLeadId() {
+  return `LEAD-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
+}
+
+function getUTMParameters() {
+  const params = new URLSearchParams(window.location.search)
+  return {
+    utm_source: params.get('utm_source') || '',
+    utm_medium: params.get('utm_medium') || '',
+    utm_campaign: params.get('utm_campaign') || '',
+    utm_term: params.get('utm_term') || '',
+    utm_content: params.get('utm_content') || ''
+  }
+}
+
+function getGAClientId() {
+  // Try to get GA client ID from dataLayer
+  if (window.dataLayer) {
+    try {
+      const gaMatch = document.cookie.match(/_ga=(.+?);/)
+      return gaMatch ? gaMatch[1] : ''
+    } catch (e) {
+      return ''
+    }
+  }
+  return ''
+}
+
+function getGrowthbookVariant() {
+  // Get current Growthbook experiment variant
+  if (window.growthbook) {
+    try {
+      const attributes = window.growthbook.getAttributes()
+      return attributes?.experiment_variant || ''
+    } catch (e) {
+      return ''
+    }
+  }
+  return ''
+}
+
+function getCookieConsent() {
+  // Check if user accepted cookies using vanilla-cookieconsent API
+  try {
+    // Use the official API to get user preferences
+    const userPreferences = CookieConsent.getUserPreferences()
+
+    if (userPreferences && userPreferences.acceptedCategories) {
+      const categories = userPreferences.acceptedCategories
+      // Filter out 'necessary' as it's always accepted
+      const optionalCategories = categories.filter(c => c !== 'necessary')
+
+      if (optionalCategories.length > 0) {
+        return optionalCategories.join(',')
+      }
+      return 'necessary-only'
+    }
+
+    // Fallback: check localStorage manually
+    const keys = Object.keys(localStorage)
+    const ccKey = keys.find(key => key.includes('cc_cookie'))
+
+    if (ccKey) {
+      const ccData = localStorage.getItem(ccKey)
+      if (ccData) {
+        const consent = JSON.parse(ccData)
+        if (consent.categories && Array.isArray(consent.categories)) {
+          const optionalCats = consent.categories.filter(c => c !== 'necessary')
+          return optionalCats.length > 0 ? optionalCats.join(',') : 'necessary-only'
+        }
+      }
+    }
+
+  } catch (e) {
+    console.error('Error reading cookie consent:', e)
+  }
+  return 'none'
+}
 
 // Form submission
 const handleSubmit = async () => {
@@ -310,15 +397,44 @@ const handleSubmit = async () => {
   isSubmitting.value = true
 
   try {
-    // Send data to Google Sheets using URLSearchParams to avoid CORS
+    // Collect all analytics data
+    const leadId = generateLeadId()
+    const utmParams = getUTMParameters()
+    const gaClientId = getGAClientId()
+    const growthbookVariant = getGrowthbookVariant()
+    const cookieConsent = getCookieConsent()
+
+    // Build source string (UTM or GA)
+    let source = ''
+    if (utmParams.utm_source) {
+      source = `utm:${utmParams.utm_source}/${utmParams.utm_medium}/${utmParams.utm_campaign}`
+    } else if (gaClientId) {
+      source = `ga:${gaClientId}`
+    } else {
+      source = 'direct'
+    }
+
+    // Send data to Google Sheets using URLSearchParams
     const formData = new URLSearchParams({
+      lead_id: leadId,
+      created_at: new Date().toISOString(),
       name: form.name,
       phone: form.phone,
       email: form.email,
       subject: form.subject,
-      curriculum: form.curriculum,
-      additionalInformation: form.additionalInformation,
-      timestamp: new Date().toISOString()
+      level: form.curriculum,
+      message: form.additionalInformation,
+      source: source,
+      experiment_variant: growthbookVariant,
+      consent: cookieConsent,
+      status: 'new',
+      notes: '',
+      // Include UTM params separately for better tracking
+      utm_source: utmParams.utm_source,
+      utm_medium: utmParams.utm_medium,
+      utm_campaign: utmParams.utm_campaign,
+      utm_term: utmParams.utm_term,
+      utm_content: utmParams.utm_content
     })
 
     const response = await fetch(GOOGLE_SCRIPT_URL, {
