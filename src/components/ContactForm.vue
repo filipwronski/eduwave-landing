@@ -86,7 +86,9 @@
           v-model="form.subject"
           data-field="subject"
           class="form-input shadow-none focus:border-error-color focus:ring-0 focus:ring-offset-0"
+          :class="{ 'border-error-color': errors.subject }"
           @focus="trackFieldFocus('subject')"
+          @change="validateField('subject')"
         >
           <option value="" disabled selected></option>
           <option value="matematyka">Matematyka</option>
@@ -100,6 +102,10 @@
           <option value="geografia">Geografia</option>
           <option value="inny">Inny</option>
         </select>
+        <p v-if="errors.subject" class="error-message flex items-center mt-2">
+          <img src="/warning-outline.svg" alt="Warning" class="w-4 h-4 mr-2" />
+          {{ errors.subject }}
+        </p>
       </div>
       
       <!-- Curriculum Field -->
@@ -112,6 +118,7 @@
           v-model="form.curriculum"
           data-field="level"
           class="form-input shadow-none focus:border-error-color focus:ring-0 focus:ring-offset-0"
+          :class="{ 'border-error-color': errors.curriculum }"
           @focus="trackFieldFocus('curriculum')"
         >
           <option value="" disabled selected></option>
@@ -289,7 +296,13 @@ const validateField = (fieldName) => {
         errors.email = 'Wprowadź poprawny adres email'
       }
       break
-      
+
+    case 'subject':
+      if (!form.subject) {
+        errors.subject = 'Wybierz przedmiot'
+      }
+      break
+
     case 'terms':
       if (!form.terms) {
         errors.terms = 'Musisz zaakceptować warunki'
@@ -412,6 +425,7 @@ const handleSubmit = async () => {
   validateField('name')
   validateField('phone')
   validateField('email')
+  validateField('subject')
   validateField('terms')
 
   // Check if there are any errors
