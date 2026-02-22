@@ -27,6 +27,7 @@
           data-field="name"
           class="form-input shadow-none focus:border-error-color focus:ring-0 focus:ring-offset-0"
           :class="{ 'border-error-color': errors.name }"
+          @focus="trackFieldFocus('name')"
           @blur="validateField('name')"
         />
         <p v-if="errors.name" class="error-message flex items-center mt-2">
@@ -46,6 +47,7 @@
           data-field="phone"
           class="form-input shadow-none focus:border-error-color focus:ring-0 focus:ring-offset-0"
           :class="{ 'border-error-color': errors.phone }"
+          @focus="trackFieldFocus('phone')"
           @blur="validateField('phone')"
         />
         <p v-if="errors.phone" class="error-message flex items-center mt-2">
@@ -65,6 +67,7 @@
           data-field="email"
           class="form-input shadow-none focus:border-error-color focus:ring-0 focus:ring-offset-0"
           :class="{ 'border-error-color': errors.email }"
+          @focus="trackFieldFocus('email')"
           @blur="validateField('email')"
         />
         <p v-if="errors.email" class="error-message flex items-center mt-2">
@@ -83,6 +86,7 @@
           v-model="form.subject"
           data-field="subject"
           class="form-input shadow-none focus:border-error-color focus:ring-0 focus:ring-offset-0"
+          @focus="trackFieldFocus('subject')"
         >
           <option value="" disabled selected></option>
           <option value="matematyka">Matematyka</option>
@@ -108,6 +112,7 @@
           v-model="form.curriculum"
           data-field="level"
           class="form-input shadow-none focus:border-error-color focus:ring-0 focus:ring-offset-0"
+          @focus="trackFieldFocus('curriculum')"
         >
           <option value="" disabled selected></option>
           <option value="matura">Matura</option>
@@ -226,6 +231,22 @@ import * as CookieConsent from 'vanilla-cookieconsent'
 
 const isSuccess = ref(false)
 
+// dataLayer helper
+const dl = (event, params = {}) => {
+  window.dataLayer = window.dataLayer || []
+  window.dataLayer.push({ event, ...params })
+}
+
+// Śledzenie pierwszej interakcji z formularzem
+const formStarted = ref(false)
+const trackFieldFocus = (field) => {
+  if (!formStarted.value) {
+    formStarted.value = true
+    dl('form_start', { form_name: 'consultation' })
+  }
+  dl('form_field_focus', { form_name: 'consultation', field })
+}
+
 // Form data
 const form = reactive({
   name: '',
@@ -274,6 +295,10 @@ const validateField = (fieldName) => {
         errors.terms = 'Musisz zaakceptować warunki'
       }
       break
+  }
+
+  if (errors[fieldName]) {
+    dl('form_field_error', { form_name: 'consultation', field: fieldName })
   }
 }
 
@@ -451,6 +476,7 @@ const handleSubmit = async () => {
 
     // Show success message
     isSuccess.value = true
+    dl('generate_lead', { form_name: 'consultation', lead_type: 'free_consultation' })
 
     // Reset form
     Object.assign(form, {

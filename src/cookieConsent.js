@@ -2,21 +2,13 @@ import 'vanilla-cookieconsent/dist/cookieconsent.css';
 import './cookieConsent.css';
 import * as CookieConsent from 'vanilla-cookieconsent';
 
-// Funkcje do ładowania skryptów
-function loadGTM() {
-  if (window.dataLayer) return; // Już załadowane
+// GTM jest ładowany statycznie w index.html (Consent Mode v2)
+// Tutaj tylko aktualizujemy stan zgody po decyzji użytkownika
 
-  // Inicjalizacja dataLayer
-  window.dataLayer = window.dataLayer || [];
-  window.dataLayer.push({'gtm.start': new Date().getTime(), event: 'gtm.js'});
-
-  // Ładowanie GTM
-  const script = document.createElement('script');
-  script.async = true;
-  script.src = 'https://www.googletagmanager.com/gtm.js?id=GTM-KHS92RVN';
-  document.head.appendChild(script);
-
-  console.log('✅ GTM loaded');
+function updateConsent(analyticsGranted) {
+  const state = analyticsGranted ? 'granted' : 'denied';
+  window.gtag('consent', 'update', { analytics_storage: state });
+  window.dataLayer.push({ event: 'consent_update', analytics_storage: state });
 }
 
 function loadGrowthbook() {
@@ -76,24 +68,16 @@ export function initCookieConsent() {
 
     // Callback gdy użytkownik po raz pierwszy wyraża zgodę
     onFirstConsent: ({ cookie }) => {
-      console.log('First consent:', cookie);
-
-      if (cookie.categories.includes('analytics')) {
-        loadGTM();
-      }
+      updateConsent(cookie.categories.includes('analytics'));
 
       if (cookie.categories.includes('marketing')) {
         loadGrowthbook();
       }
     },
 
-    // Callback gdy zgoda się zmienia
+    // Callback gdy zgoda jest już zapisana (powracający użytkownicy + po pierwszej zgodzie)
     onConsent: ({ cookie }) => {
-      console.log('Consent changed:', cookie);
-
-      if (cookie.categories.includes('analytics')) {
-        loadGTM();
-      }
+      updateConsent(cookie.categories.includes('analytics'));
 
       if (cookie.categories.includes('marketing')) {
         loadGrowthbook();
