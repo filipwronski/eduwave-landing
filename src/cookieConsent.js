@@ -118,7 +118,7 @@ export function initCookieConsent() {
             acceptNecessaryBtn: 'Odrzuć',
             showPreferencesBtn: 'Zarządzaj',
             footer: `
-              <a href="/polityka-prywatnosci.pdf" target="_blank">Polityka prywatności</a>
+              <a href="${import.meta.env.BASE_URL}polityka-prywatnosci.pdf" target="_blank">Polityka prywatności</a>
             `
           },
           preferencesModal: {
@@ -131,7 +131,7 @@ export function initCookieConsent() {
             sections: [
               {
                 title: 'Wykorzystanie plików cookie',
-                description: 'Używamy plików cookie, aby zapewnić podstawowe funkcje strony oraz poprawić Twoje wrażenia z korzystania z niej. Możesz wybrać dla każdej kategorii, czy chcesz ją włączyć czy wyłączyć. Aby uzyskać więcej informacji na temat plików cookie i innych wrażliwych danych, przeczytaj pełną <a href="/polityka-prywatnosci.pdf" class="cc-link">politykę prywatności</a>.'
+                description: 'Używamy plików cookie, aby zapewnić podstawowe funkcje strony oraz poprawić Twoje wrażenia z korzystania z niej. Możesz wybrać dla każdej kategorii, czy chcesz ją włączyć czy wyłączyć. Aby uzyskać więcej informacji na temat plików cookie i innych wrażliwych danych, przeczytaj pełną <a href="${import.meta.env.BASE_URL}polityka-prywatnosci.pdf" class="cc-link">politykę prywatności</a>.'
               },
               {
                 title: 'Niezbędne pliki cookie',

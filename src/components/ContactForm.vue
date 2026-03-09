@@ -200,7 +200,7 @@
           </div>
           <label for="terms" class="text-[13px] font-medium text-white cursor-pointer">
             <!-- todo: dodać polityke -->
-            Zapoznałem/am się z <a href="/polityka-prywatnosci.pdf" target="_blank" rel="noopener" class="dotted-underline">Polityką prywatności</a> i wyrażam zgodę na przetwarzanie danych osobowych
+            Zapoznałem/am się z <a :href="`${baseUrl}polityka-prywatnosci.pdf`" target="_blank" rel="noopener" class="dotted-underline">Polityką prywatności</a> i wyrażam zgodę na przetwarzanie danych osobowych
           </label>
         </div>
         <p v-if="errors.terms" class="error-message flex items-center mt-2">
@@ -233,6 +233,8 @@
 
 <script setup>
 import { ref, reactive, onMounted, onUnmounted } from 'vue'
+
+const baseUrl = import.meta.env.BASE_URL
 import FormSuccess from './FormSuccess.vue'
 import * as CookieConsent from 'vanilla-cookieconsent'
 
