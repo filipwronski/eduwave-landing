@@ -200,7 +200,7 @@
           </div>
           <label for="terms" class="text-[13px] font-medium text-white cursor-pointer">
             <!-- todo: dodać polityke -->
-            Zapoznałem/am się z <a href="/polityka-prywatnosci" class="dotted-underline">Polityką prywatności</a> i wyrażam zgodę na przetwarzanie danych osobowych
+            Zapoznałem/am się z <a href="/polityka-prywatnosci.pdf" target="_blank" rel="noopener" class="dotted-underline">Polityką prywatności</a> i wyrażam zgodę na przetwarzanie danych osobowych
           </label>
         </div>
         <p v-if="errors.terms" class="error-message flex items-center mt-2">
@@ -232,7 +232,7 @@
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive, onMounted, onUnmounted } from 'vue'
 import FormSuccess from './FormSuccess.vue'
 import * as CookieConsent from 'vanilla-cookieconsent'
 
@@ -244,12 +244,37 @@ const dl = (event, params = {}) => {
   window.dataLayer.push({ event, ...params })
 }
 
+// form_view — fires once when 50% of form is visible
+onMounted(() => {
+  const formEl = document.getElementById('contact-form')
+  if (!formEl) return
+  const observer = new IntersectionObserver(
+    (entries) => {
+      if (entries[0].isIntersecting) {
+        dl('form_view', { form_name: 'consultation' })
+        observer.disconnect()
+      }
+    },
+    { threshold: 0.5 }
+  )
+  observer.observe(formEl)
+})
+
+// form_abandon — 30s timer from form_start, cancelled on success
+let abandonTimer = null
+onUnmounted(() => clearTimeout(abandonTimer))
+
 // Śledzenie pierwszej interakcji z formularzem
 const formStarted = ref(false)
 const trackFieldFocus = (field) => {
   if (!formStarted.value) {
     formStarted.value = true
     dl('form_start', { form_name: 'consultation' })
+    abandonTimer = setTimeout(() => {
+      if (!isSuccess.value) {
+        dl('form_abandon', { form_name: 'consultation' })
+      }
+    }, 30000)
   }
   dl('form_field_focus', { form_name: 'consultation', field })
 }
@@ -273,45 +298,53 @@ const errors = reactive({})
 // Validation rules
 const validateField = (fieldName) => {
   delete errors[fieldName]
-  
+  let errorType = null
+
   switch (fieldName) {
     case 'name':
       if (!form.name.trim()) {
         errors.name = 'Imię jest wymagane'
+        errorType = 'required'
       } else if (form.name.trim().length < 2) {
         errors.name = 'Imię musi mieć co najmniej 2 znaki'
+        errorType = 'too_short'
       }
       break
-      
+
     case 'phone':
       if (!form.phone.trim()) {
         errors.phone = 'Numer telefonu jest wymagany'
+        errorType = 'required'
       } else if (!isValidPhone(form.phone)) {
         errors.phone = 'Wprowadź poprawny numer telefonu (np. 123456789 lub +48123456789)'
+        errorType = 'invalid_format'
       }
       break
-      
+
     case 'email':
       if (form.email && !isValidEmail(form.email)) {
         errors.email = 'Wprowadź poprawny adres email'
+        errorType = 'invalid_format'
       }
       break
 
     case 'subject':
       if (!form.subject) {
         errors.subject = 'Wybierz przedmiot'
+        errorType = 'required'
       }
       break
 
     case 'terms':
       if (!form.terms) {
         errors.terms = 'Musisz zaakceptować warunki'
+        errorType = 'required'
       }
       break
   }
 
-  if (errors[fieldName]) {
-    dl('form_field_error', { form_name: 'consultation', field: fieldName })
+  if (errorType) {
+    dl('form_field_error', { field_name: fieldName, error_type: errorType })
   }
 }
 
@@ -490,6 +523,14 @@ const handleSubmit = async () => {
 
     // Show success message
     isSuccess.value = true
+    clearTimeout(abandonTimer)
+    dl('form_success', {
+      form_name: 'consultation',
+      subject: form.subject,
+      curriculum: form.curriculum,
+      has_email: !!form.email,
+      has_additional_info: !!form.additionalInformation
+    })
     dl('generate_lead', { form_name: 'consultation', lead_type: 'free_consultation' })
 
     // Reset form
