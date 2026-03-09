@@ -63,7 +63,7 @@
               </span>
             </p>
 
-            <a href="/polityka-prywatnosci.pdf" target="_blank" class="text-neutral-darker text-[13px] visited:text-neutral-darker hover:text-black">Polityka prywatności</a>
+            <a :href="`${baseUrl}polityka-prywatnosci.pdf`" target="_blank" class="text-neutral-darker text-[13px] visited:text-neutral-darker hover:text-black">Polityka prywatności</a>
           </footer>
         </div>
           
@@ -78,7 +78,7 @@
                   &copy; {{ new Date().getFullYear() }} Eduwave. Wszelkie prawa zastrzeżone.
                 </span>
 
-                <a href="/polityka-prywatnosci.pdf" target="_blank" class="text-[13px] antialiased hover:text-black">Polityka prywatności</a>
+                <a :href="`${baseUrl}polityka-prywatnosci.pdf`" target="_blank" class="text-[13px] antialiased hover:text-black">Polityka prywatności</a>
               </p>
             </footer>
           </div>
@@ -91,6 +91,8 @@
 <script setup>
 import { ref } from 'vue'
 import ContactForm from './ContactForm.vue'
+
+const baseUrl = import.meta.env.BASE_URL
 
 // Benefits data
 const benefits = ref([
